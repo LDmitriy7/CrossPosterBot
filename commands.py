@@ -9,14 +9,20 @@ from loader import dp
 START = 'start'
 CANCEL = 'cancel'
 BROADCAST = 'broadcast'
+ADD_ROUTE = 'add_route'
+DEL_ROUTE = 'del_route'
+SHOW_ROUTES = 'show_routes'
 
 USER_COMMANDS = [
-    types.BotCommand(START, 'Запустить бота'),
+    types.BotCommand(START, 'Start bot'),
+    types.BotCommand(CANCEL, 'Cancel'),
 ]
 
 ADMIN_COMMANDS = USER_COMMANDS + [
-    types.BotCommand(CANCEL, 'Отменить'),
-    types.BotCommand(BROADCAST, 'Рассылка'),
+    # types.BotCommand(BROADCAST, 'Рассылка'),
+    types.BotCommand(ADD_ROUTE, 'Add route'),
+    types.BotCommand(DEL_ROUTE, 'Delete route'),
+    types.BotCommand(SHOW_ROUTES, 'Show routes'),
 ]
 
 
