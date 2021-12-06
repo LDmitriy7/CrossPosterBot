@@ -59,7 +59,8 @@ async def add_route_target(msg: types.Message, state: FSMContext):
 
     async with StorageProxy(documents.Route) as route:
         route.target_id = target_id
-        route.save()
+
+    route.save()
 
     await state.finish()
     await msg.answer(f'Route added\n\n(ID: <code>{route.id}</code>)')
