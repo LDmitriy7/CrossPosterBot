@@ -4,7 +4,6 @@ import api
 import commands
 import config
 import keyboards as kb
-import texts
 from loader import dp
 
 
@@ -17,13 +16,7 @@ async def show_first_route(msg: types.Message):
         await msg.answer('There are no routes')
         return
 
-    route = routes[index]
-    route_info = texts.route_info.format(
-        route_id=route.id,
-        source_id=route.source_id,
-        target_id=route.target_id,
-    )
-
+    route_info = await api.get_route_info(routes[index])
     await msg.answer(route_info, reply_markup=kb.FlipRoutes(index))
 
 
@@ -41,33 +34,5 @@ async def show_route_by_index(query: types.CallbackQuery, button: dict):
         await query.answer('There are no routes')
         return
 
-    route = routes[index]
-    route_info = texts.route_info.format(
-        route_id=route.id,
-        source_id=route.source_id,
-        target_id=route.target_id,
-    )
-
+    route_info = await api.get_route_info(routes[index])
     await query.message.edit_text(route_info, reply_markup=kb.FlipRoutes(index))
-
-# @dp.message_handler(commands=commands.SHOW_ROUTES, user_id=config.Users.admins_ids)
-# async def show_first_route(msg: types.Message):
-#     routes = api.get_all_routes()
-#
-#     if not routes:
-#         await msg.answer('There are no routes')
-#         return
-#
-#     await msg.answer(routes[0].id)
-
-# await msg.answer('Send me ID of <b>route</b>')
-
-# @dp.message_handler(state=DelRouteConv.route_id)
-# async def del_route_by_id(msg: types.Message, state: FSMContext):
-#     try:
-#         api.del_route(msg.text)
-#     except api.RouteNotExists:
-#         await msg.answer('Route does not exists')
-#     else:
-#         await state.finish()
-#         await msg.answer(f'Route deleted')

@@ -4,6 +4,7 @@ from aiogram.dispatcher.filters.state import StatesGroup, State
 from aiogram.utils.exceptions import TelegramAPIError
 from aiogram_utils.storage_proxy import StorageProxy
 
+import api
 import commands
 import config
 from loader import dp
@@ -61,6 +62,7 @@ async def add_route_target(msg: types.Message, state: FSMContext):
         route.target_id = target_id
 
     route.save()
+    route_info = await api.get_route_info(route)
 
     await state.finish()
-    await msg.answer(f'Route added\n\n(ID: <code>{route.id}</code>)')
+    await msg.answer(route_info)
