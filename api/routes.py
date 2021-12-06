@@ -1,5 +1,8 @@
-from models import documents
+from __future__ import annotations
+
 import mongoengine as me
+
+from models import documents
 
 
 class RouteNotExists(Exception):
